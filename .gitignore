@@ -31,3 +31,6 @@ build/
 
 ### VS Code ###
 .vscode/
+
+###springboot user management learning project###
+body.json
