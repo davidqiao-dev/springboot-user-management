@@ -1,5 +1,6 @@
 package com.qiao.usermanagement.config;
 
+import com.qiao.usermanagement.mapper.UserMapper;
 import com.qiao.usermanagement.model.User;
 import com.qiao.usermanagement.repository.UserRepository;
 import jakarta.annotation.PostConstruct;
@@ -17,20 +18,22 @@ public class DataInitializer {
     public void init() {
 
         userRepository.save(
-                new User(
-                        1L,
-                        "David",
-                        "david@example.com",
-                        45
+                UserMapper.toEntity(new User(
+                                1L,
+                                "David",
+                                "david@example.com",
+                                45
+                        )
                 )
         );
 
         userRepository.save(
-                new User(
-                        2L,
-                        "Tom",
-                        "tom@example.com",
-                        30
+                UserMapper.toEntity(new User(
+                                2L,
+                                "Tom",
+                                "tom@example.com",
+                                30
+                        )
                 )
         );
     }
