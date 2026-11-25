@@ -99,4 +99,16 @@ class UserControllerIntegrationTest {
                                 .content(requestBody))
                 .andExpect(status().isBadRequest());
     }
+
+    @Test
+    void shouldGetUsers() throws Exception {
+        mockMvc.perform(
+                        get("/users")
+                )
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$[0].name")
+                        .value("David")
+                )
+        ;
+    }
 }
