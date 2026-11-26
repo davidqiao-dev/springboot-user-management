@@ -1,15 +1,13 @@
 package com.qiao.usermanagement.model;
 
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.Max;
-import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.*;
 
 public record User(
 
         Long id,
 
         @NotBlank(message="姓名不能为空")
+        @Size(max=100)
         String name,
 
         @Email(message = "邮箱格式不正确")

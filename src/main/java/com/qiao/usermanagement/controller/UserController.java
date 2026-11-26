@@ -1,8 +1,12 @@
 package com.qiao.usermanagement.controller;
 
+import com.qiao.usermanagement.common.ApiResponse;
 import com.qiao.usermanagement.model.User;
 import com.qiao.usermanagement.service.UserService;
 import jakarta.validation.Valid;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.data.domain.Page;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,22 +23,34 @@ public class UserController {
     }
 
     @GetMapping("/{id}")
-    public User getUser(@PathVariable Long id) {
+    public ApiResponse<User> getUser(@PathVariable Long id) {
 
-        return userService.getUser(id);
+        return ApiResponse.success(
+                userService.getUser(id)
+        );
     }
 
     @PostMapping
-    public User createUser(@Valid @RequestBody User user) {
+    public ResponseEntity<ApiResponse<User>> createUser(@Valid @RequestBody User user) {
 
-        return userService.createUser(user);
+        User createdUser = userService.createUser(user);
+        return ResponseEntity
+                .status(HttpStatus.CREATED)
+                .body(
+                        ApiResponse.success(
+                                "User created successfully",
+                                createdUser)
+                );
     }
 
     @PutMapping("/{id}")
-    public User updateUser(@Valid @PathVariable Long id,
-                           @RequestBody User user) {
+    public ApiResponse<User> updateUser(@Valid @PathVariable Long id,
+                                        @RequestBody User user) {
 
-        return userService.updateUser(id, user);
+        return ApiResponse.success(
+                "User updated successfully",
+                userService.updateUser(id, user)
+        );
     }
 
     @DeleteMapping("/{id}")
@@ -45,8 +61,13 @@ public class UserController {
     }
 
     @GetMapping
-    public List<User> getUsers() {
+    public Page<User> getUsers(
+            @RequestParam(defaultValue = "0")
+            int page,
+            @RequestParam(defaultValue = "10")
+            int size
+    ) {
 
-        return userService.getUsers();
+        return userService.getUsers(page, size);
     }
 }

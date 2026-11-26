@@ -16,26 +16,30 @@ public class DataInitializer {
 
     @PostConstruct
     public void init() {
+        if (!userRepository.existsByEmail("david@example.com")) {
+            userRepository.save(
+                    UserMapper.toEntity(new User(
+                                    null,
+                                    "David",
+                                    "david@example.com",
+                                    45
+                            )
+                    )
+            );
+        }
 
-        userRepository.save(
-                UserMapper.toEntity(new User(
-                                1L,
-                                "David",
-                                "david@example.com",
-                                45
-                        )
-                )
-        );
+        if (!userRepository.existsByEmail("tom@example.com")) {
+            userRepository.save(
+                    UserMapper.toEntity(new User(
+                                    null,
+                                    "Tom",
+                                    "tom@example.com",
+                                    30
+                            )
+                    )
+            );
+        }
 
-        userRepository.save(
-                UserMapper.toEntity(new User(
-                                2L,
-                                "Tom",
-                                "tom@example.com",
-                                30
-                        )
-                )
-        );
     }
 
 }

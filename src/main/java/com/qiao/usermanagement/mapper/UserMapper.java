@@ -15,11 +15,11 @@ public class UserMapper {
     }
 
     public static UserEntity toEntity(User user) {
-        return new UserEntity(
-                user.id(),
-                user.name(),
-                user.email(),
-                user.age()
-        );
+        UserEntity entity = new UserEntity();
+        entity.setName(user.name());
+        entity.setEmail(user.email());
+        entity.setAge(user.age());
+
+        return entity;
     }
 }

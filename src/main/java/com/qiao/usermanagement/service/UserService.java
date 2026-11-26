@@ -1,6 +1,7 @@
 package com.qiao.usermanagement.service;
 
 import com.qiao.usermanagement.model.User;
+import org.springframework.data.domain.Page;
 
 import java.util.List;
 
@@ -14,5 +15,5 @@ public interface UserService {
 
     void deleteUser(Long id);
 
-    List<User> getUsers();
+    Page<User> getUsers(int page, int size);
 }
