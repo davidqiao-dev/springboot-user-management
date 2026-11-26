@@ -15,5 +15,10 @@ public interface UserService {
 
     void deleteUser(Long id);
 
-    Page<User> getUsers(int page, int size);
+    Page<User> getUsers(
+            int page
+            , int size
+            , String sortBy
+            , String direction
+    );
 }

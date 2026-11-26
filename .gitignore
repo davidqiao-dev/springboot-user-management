@@ -34,3 +34,6 @@ build/
 
 ###springboot user management learning project###
 body.json
+.env
+compose.yml
+docker-compose.yml

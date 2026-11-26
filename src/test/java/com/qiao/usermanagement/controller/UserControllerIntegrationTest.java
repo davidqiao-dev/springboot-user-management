@@ -111,4 +111,21 @@ class UserControllerIntegrationTest {
                 )
         ;
     }
+
+    @Test
+    void shouldGetPagedUsers() throws Exception {
+        mockMvc.perform(
+                        get("/users")
+                                .param("page", "0")
+                                .param("size", "5")
+                )
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.data.content")
+                        .exists()
+                )
+                .andExpect(jsonPath("$.data.number")
+                        .value(0)
+                )
+        ;
+    }
 }

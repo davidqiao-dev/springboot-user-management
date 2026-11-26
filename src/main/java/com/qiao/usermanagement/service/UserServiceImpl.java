@@ -5,17 +5,18 @@ import com.qiao.usermanagement.exception.UserNotFoundException;
 import com.qiao.usermanagement.mapper.UserMapper;
 import com.qiao.usermanagement.model.User;
 import com.qiao.usermanagement.repository.UserRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-
 @Service
+@Slf4j
 public class UserServiceImpl implements UserService {
 
     private final UserRepository repository;
@@ -29,6 +30,7 @@ public class UserServiceImpl implements UserService {
     public User getUser(Long id) {
 
         System.out.println("loading user from database...");
+        log.info("loading user {} from database...", id);
 
         UserEntity entity = repository.findById(id).orElseThrow(
                 () -> new UserNotFoundException(id)
@@ -71,9 +73,19 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Page<User> getUsers(int page, int size) {
+    public Page<User> getUsers(
+            int page
+            , int size
+            , String sortBy
+            , String direction
+    ) {
 
-        Pageable pageable = PageRequest.of(page, size);
+        Sort sort = direction.equalsIgnoreCase("desc")
+                ? Sort.by(sortBy).descending()
+                : Sort.by(sortBy).ascending();
+
+        Pageable pageable = PageRequest.of(page, size, sort);
+
         return repository.findAll(pageable)
                 .map(UserMapper::toModel)
                 ;

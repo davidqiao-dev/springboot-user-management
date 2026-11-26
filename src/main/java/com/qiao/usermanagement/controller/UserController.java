@@ -4,6 +4,8 @@ import com.qiao.usermanagement.common.ApiResponse;
 import com.qiao.usermanagement.model.User;
 import com.qiao.usermanagement.service.UserService;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
@@ -61,13 +63,22 @@ public class UserController {
     }
 
     @GetMapping
-    public Page<User> getUsers(
+    public ApiResponse<Page<User>> getUsers(
             @RequestParam(defaultValue = "0")
+            @Min(0)
             int page,
             @RequestParam(defaultValue = "10")
-            int size
+            @Min(1)
+            @Max(100)
+            int size,
+            @RequestParam(defaultValue = "id")
+            String sortBy,
+            @RequestParam(defaultValue = "asc")
+            String direction
     ) {
 
-        return userService.getUsers(page, size);
+        return ApiResponse.success(
+                userService.getUsers(page, size, sortBy, direction)
+        );
     }
 }

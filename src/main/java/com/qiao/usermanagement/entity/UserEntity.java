@@ -19,12 +19,10 @@ public class UserEntity {
     private Integer age;
 
     public UserEntity(
-            Long id,
             String name,
             String email,
             Integer age
     ) {
-        this.id = id;
         this.name = name;
         this.email = email;
         this.age = age;
