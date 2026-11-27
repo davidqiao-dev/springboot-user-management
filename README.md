@@ -1,0 +1,1 @@
+[![Build](https://github.com/davidqiao-dev/springboot-user-management/actions/workflows/build.yml/badge.svg)](https://github.com/davidqiao-dev/springboot-user-management/actions/workflows/build.yml)
