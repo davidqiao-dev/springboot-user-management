@@ -37,3 +37,4 @@ body.json
 .env
 compose.yml
 docker-compose.yml
+Dockerfile

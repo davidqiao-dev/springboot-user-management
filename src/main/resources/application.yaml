@@ -19,3 +19,23 @@ spring:
     redis:
       host: localhost
       port: 6379
+
+info:
+  app:
+    name: User Management
+    version: 1.0.0
+    description: Spring Boot Redis Demo
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+
+  endpoint:
+    health:
+      show-details: always
+
+  info:
+    env:
+      enabled: true
