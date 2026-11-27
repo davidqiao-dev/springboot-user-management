@@ -38,3 +38,5 @@ body.json
 compose.yml
 docker-compose.yml
 Dockerfile
+.github/workflows/qodana_code_quality.yml
+.qodana.yaml

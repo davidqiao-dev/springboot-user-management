@@ -1,0 +1,39 @@
+name: Build
+
+on:
+  push:
+    branches:
+      - main
+
+  pull_request:
+    branches:
+      - main
+
+
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+
+      - uses: actions/checkout@v4
+
+      - name: Setup JDK
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 27
+
+      - name: Cache Maven
+        uses: actions/cache@v4
+        with:
+          path: ~/.m2
+          key: maven-${{ hashFiles('**/pom.xml') }}
+          restore-keys: maven-
+
+      - name: Build
+        run: |
+          chmod +x mvnw
+          ./mvnw clean verify
